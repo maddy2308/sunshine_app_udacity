@@ -7,17 +7,51 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String LOG_TAG = getClass().getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(LOG_TAG, "In onCreate Method");
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(LOG_TAG, "In onPause Method");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(LOG_TAG, "In onStop Method");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(LOG_TAG, "In onResume Method");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(LOG_TAG, "In onStart Method");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(LOG_TAG, "In onDestroy Method");
     }
 
     @Override
@@ -49,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
     private void openGeoLocationOnMap() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String zipCode = prefs.getString(getString(R.string.pref_location_key),
-                getString(R.string.pref_location_default));
+            getString(R.string.pref_location_default));
         Uri geoLocation = Uri.parse("geo:0,0?").buildUpon()
-                .appendQueryParameter("q", zipCode)
-                .build();
+            .appendQueryParameter("q", zipCode)
+            .build();
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(geoLocation);
         if (intent.resolveActivity(getPackageManager()) != null) {
